@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  yolov4api:
+    image: yolov4_inference_api_gpu:latest
+    environment:
+      - "NVIDIA_VISIBLE_DEVICES=0"
+    ports:
+      - "9999:9999"

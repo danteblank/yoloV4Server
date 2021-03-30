@@ -1,0 +1,18 @@
+From  nvidia/cuda:10.1-cudnn8-runtime-ubuntu18.04
+
+LABEL maintainer="@danteblank"
+WORKDIR /yolov4server
+
+COPY docker/requirements.txt .
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install python3.7 \
+  python3-pip python3.7-dev \
+  libopencv-dev
+
+RUN python3.7 -m pip install setuptools wheel
+RUN python3.7 -m pip  install --upgrade pip
+RUN python3.7 -m pip  install -r requirements.txt
+
+COPY ./src .
+
+CMD ["python3.7", "main.py"]

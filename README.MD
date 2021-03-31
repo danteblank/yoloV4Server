@@ -37,8 +37,8 @@ make build
 ***
 #### Для сборки образа:
 #### To build the image:
-Перейти в корневой каталог проекта и ввести команды:
-Go to the root path of the project and type commands:
+* Перейти в корневой каталог проекта и ввести команды:
+* Go to the project root folder and enter:
 ````bash
 sudo chmod +x ./build_image.sh
 sudo ./build_image.sh 
@@ -46,7 +46,8 @@ sudo ./build_image.sh
 
 #### Для запуска образа вне docker-compose:
 #### To start image without docker-compose:
-Перейти в корневой каталог проекта и ввести команды:
+* Перейти в корневой каталог проекта и ввести команды:
+* Go to the project root folder and enter:
 ````bash
 sudo chmod +x ./run_image.sh
 sudo ./run_image.sh 
@@ -54,8 +55,8 @@ sudo ./run_image.sh
 
 #### Для запуска в docker-compose:
 #### To start the image with docker-compose:
-В корневой папке находится docker-compose.yaml
-There is docker-compose.yaml in the root path:
+* В корневой папке находится docker-compose.yaml
+* There is docker-compose.yaml in the root path:
 ````yaml
 version: "2.3"
 
@@ -74,6 +75,7 @@ services:
 * /api/classify_small
 
 Классификация с resize входного файла(самый быстрый инференс):
+
 Classification with input file resize (fastest inference):
 ```bash
 curl --location --request POST 'http://0.0.0.0:9999/api/classify_small' \
@@ -84,6 +86,7 @@ curl --location --request POST 'http://0.0.0.0:9999/api/classify_small' \
 * /api/classify_full
 
 Классификация полного входного файла:
+
 Full image classification:
 ````bash
 curl --location --request POST 'http://0.0.0.0:9999/api/classify_full' \
@@ -94,6 +97,7 @@ curl --location --request POST 'http://0.0.0.0:9999/api/classify_full' \
 * /api/draw_image
 
 Классификатор возвращает входное фото с нарисованными рамками:
+
 Classificator returns input photo with frames on it:
 ````bash
 curl --location --request POST 'http://10.65.68.13:9999/api/draw_image' \

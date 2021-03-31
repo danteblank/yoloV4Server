@@ -100,7 +100,7 @@ curl --location --request POST 'http://0.0.0.0:9999/api/classify_full' \
 
 Classificator returns input photo with frames on it:
 ````bash
-curl --location --request POST 'http://10.65.68.13:9999/api/draw_image' \
+curl --location --request POST 'http://0.0.0.0:9999/api/draw_image' \
 --header 'Content-Type: image/jpeg' \
 --data-binary '@car.jpeg'
 ````

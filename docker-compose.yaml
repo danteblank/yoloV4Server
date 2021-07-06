@@ -1,8 +1,9 @@
-version: "3"
+version: "2.3"
 
 services:
   yolov4api:
     image: yolov4_inference_api_gpu:latest
+    runtime: nvidia
     environment:
       - "NVIDIA_VISIBLE_DEVICES=0"
     ports:

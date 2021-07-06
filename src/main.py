@@ -2,20 +2,20 @@ import os
 import flask
 import logging
 import io
+import gc
 from inference.inference import DataDetect
 from flask import request, jsonify, send_file
 
 from utils.utils import resp_json
 from utils.exceptions import InvalidUsage
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
-print('Initializing neural network')
+gc.enable()
 yolo_v4 = DataDetect()
-
 app = flask.Flask(__name__)
+gunicorn_error_logger = logging.getLogger('gunicorn.error')
+app.logger.handlers.extend(gunicorn_error_logger.handlers)
+
+app.logger.info('Initializing server...')
 
 
 @app.errorhandler(InvalidUsage)
@@ -37,6 +37,7 @@ def classify_small():
         data = request.data
         image = io.BytesIO(data)
         finish = yolo_v4.classify_image(image=image)
+        app.logger.info('Triggered classify_small')
         return resp_json(200, finish)
     except Exception:
         raise InvalidUsage('400 - Bad Request', status_code=400)
@@ -47,6 +48,7 @@ def classify_full():
     try:
         image = request.data
         finish = yolo_v4.classify_full_image(image=image)
+        app.logger.info('Triggered classify_full')
         return resp_json(200, finish)
     except Exception:
         raise InvalidUsage('400 - Bad Request', status_code=400)
@@ -57,6 +59,7 @@ def draw_image():
     try:
         image = request.data
         finish = yolo_v4.return_boxes_on_image(image=image)
+        app.logger.info('Triggered draw_image')
         return send_file(finish), os.remove(finish)
     except Exception:
         raise InvalidUsage('400 - Bad Request', status_code=400)
